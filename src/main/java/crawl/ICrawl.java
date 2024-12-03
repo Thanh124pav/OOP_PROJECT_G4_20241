@@ -1,6 +1,8 @@
-package main.java;
+package crawl;
 
 
+import graph.Tweet;
+import graph.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,10 +25,10 @@ public interface ICrawl {
     static String setQuery(Class<?> type){
         String query;
         if(type.equals(User.class)){
-            query = User.userCard + ":" + "not([tabindex='-1'])" + "." + User.userClass;
+            query = User.userClass;
         }
         else if (type.equals(Tweet.class)){
-            query = Tweet.tweetCard + "." + Tweet.tweetClass;
+            query = Tweet.tweetClass;
         }
         else {
             System.out.println("Not valid type!");
@@ -36,6 +38,7 @@ public interface ICrawl {
     }
 
     static Set<?> getElements(WebDriver driver, int limit, Class<?> type) throws InterruptedException {
+        System.out.println("Crawl elements!");
         if(checkInvalidType(type)){
             System.out.println("Invalid type for getElement function!");
             return null;
@@ -44,7 +47,7 @@ public interface ICrawl {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         Set<User> users = new HashSet<>();
         Set<Tweet> tweets = new HashSet<>();
-        System.out.println(query);
+        //System.out.println(query);
         Set<WebElement> elements = new HashSet<>();
         while(elements.size() < limit) {
             int oldSize = elements.size();
@@ -62,12 +65,14 @@ public interface ICrawl {
             }
             scrollUp(js);
         }
+        System.out.println("finish crawling!");
         if(type.equals(User.class)){
             return users;
         }
         else{
             return tweets;
         }
+
     }
 
     /** Get details of users */
@@ -75,12 +80,12 @@ public interface ICrawl {
         Set<User> users = new HashSet<>();
         for (WebElement userCard: userCards) {
             String href = userCard.getAttribute("href");
-            String queryName = User.userSubCard + "." + User.userSubClass;
+            String queryName = User.userNameClass;
             String name = userCard.findElement(By.cssSelector(queryName)).getText();
             User user = new User(href, name);
             if(!users.contains(user)){
                 users.add(user);
-                System.out.println(href + " - " + name + " added!");
+                System.out.println("\t" + href + " - " + name + " added!");
             }
         }
         return users;
@@ -93,7 +98,7 @@ public interface ICrawl {
             Tweet tweet = new Tweet(href);
             if(!tweets.contains(tweet)){
                 tweets.add(tweet);
-                System.out.println(href +  " - " + "added!");
+                System.out.println("\t" + href +  " - " + "added!");
             }
         }
         return tweets;

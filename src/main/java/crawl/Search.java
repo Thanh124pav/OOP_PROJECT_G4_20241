@@ -1,5 +1,7 @@
-package main.java;
+package crawl;
 
+import graph.Tweet;
+import graph.User;
 import org.openqa.selenium.WebDriver;
 
 import java.io.IOException;
@@ -10,7 +12,7 @@ public class Search implements ICrawl {
     private Set<User> users = new HashSet<>();
     private Set<Tweet> tweets = new HashSet<>();
 
-    Search(){
+    public Search(){
     }
     /** Encode hashtag for searching by url */
     private String encodeTag(String text, Class<?> type){
