@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Set;
 
 public class UserPage extends Page{
-    protected static String userNameCard = "div[data-testid='UserName']";//"span.css-1jxf684.r-bcqeeo.r-1ttztb7.r-qvutc0.r-poiln3";
-    protected static String bioCard = "div[data-testid='UserDescription']";
-    protected static String imageCard = "a.css-175oi2r.r-1pi2tsx.r-13qz1uu.r-o7ynqc.r-6416eg.r-1ny4l3l.r-1loqt21";
-    protected static String followCard = "span.css-1jxf684.r-bcqeeo.r-1ttztb7.r-qvutc0.r-poiln3.r-1b43r93.r-1cwl3u0.r-b88u0q";
+    protected static String userNameCard = primaryColumn + "div[data-testid='UserName'] span.css-1jxf684.r-bcqeeo.r-1ttztb7.r-qvutc0.r-poiln3";//"span.css-1jxf684.r-bcqeeo.r-1ttztb7.r-qvutc0.r-poiln3";
+    protected static String bioCard = primaryColumn + "div[data-testid='UserDescription']";
+    protected static String imageCard = primaryColumn + "a.css-175oi2r.r-1pi2tsx.r-13qz1uu.r-o7ynqc.r-6416eg.r-1ny4l3l.r-1loqt21";
+    protected static String followCard = primaryColumn + "span.css-1jxf684.r-bcqeeo.r-1ttztb7.r-qvutc0.r-poiln3.r-1b43r93.r-1cwl3u0.r-b88u0q";
 
     private String profileUrl;
     private String userId;
@@ -77,12 +77,14 @@ public class UserPage extends Page{
     }
 
     public void extractDetails(WebDriver driver) throws InterruptedException, IOException {
-//        WebDriver driver = WebDriverUtil.setUpDriver();
         driver.get(profileUrl);
-        Thread.sleep(5000);
+        Thread.sleep(4000);
 
         userName = driver.findElement(By.cssSelector(userNameCard)).getText();
-        bio = driver.findElement(By.cssSelector(bioCard)).getText();
+        WebElement bioElement = driver.findElement(By.cssSelector(bioCard));
+        if(bioElement != null){
+            bio = bioElement.getText();
+        }
         profileImageUrl = driver.findElement(By.cssSelector(imageCard)).getText();
         List<WebElement> follow = driver.findElements(By.cssSelector(followCard));
         followingCount = follow.getFirst().getText();
@@ -90,17 +92,15 @@ public class UserPage extends Page{
     }
 
     public void extractTweets(WebDriver driver, int limit) throws InterruptedException, IOException {
-//        WebDriver driver = WebDriverUtil.setUpDriver();
         driver.get(profileUrl);
-        Thread.sleep(5000);
+        Thread.sleep(4000);
         tweets = getElementsByScroll(driver, limit, Page.tweetCard);
         tweetCount = tweets.size();
     }
 
     public void extractFollowing(WebDriver driver, int limit) throws InterruptedException, IOException {
-//        WebDriver driver = WebDriverUtil.setUpDriver();
         driver.get(profileUrl + "/following");
-        Thread.sleep(5000);
+        Thread.sleep(4000);
 
         following = getElementsByScroll(driver, limit, Page.userCard);
     }
@@ -110,4 +110,15 @@ public class UserPage extends Page{
         extractTweets(driver, limitTweets);
         extractFollowing(driver, limitFollowing);
     }
+    @Override
+    protected Set<String> extractInfoBySCroll(Set<WebElement> elements){
+        //Set<Page> basicInfos = new HashSet<>();
+        Set<String> links = super.extractInfoBySCroll(elements);
+        Set<String> ids = new HashSet<>();
+        for (String link: links){
+            String[] parts = link.split("/");
+            ids.add(parts[parts.length-1]);
+        }
+        return ids;
+    };
 }

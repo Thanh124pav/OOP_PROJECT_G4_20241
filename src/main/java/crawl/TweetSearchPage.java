@@ -1,6 +1,7 @@
 package crawl;
 
 //import graph.UserOld;
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -37,43 +38,24 @@ public class TweetSearchPage extends Page{
         query = query + postfix;
         return query;
     }
-    public static void main(String[] args) throws InterruptedException, IOException {
-        System.out.println("Start crawling!");
-        String keyword = "Blockchain";
-        System.out.printf("\t Crawl tweets by searching hashtag: %s\n", keyword);
 
+    public Set<String> crawlLinks(WebDriver driver, String typeQuery, String fileName) throws IOException, InterruptedException {
+        System.out.printf(" Crawl tweets by: %s", this.link);
+        driver.get(this.link);
+        Thread.sleep(5000);
+        Set<String> links = this.getElementsByScroll(driver, 1000, typeQuery);
+        Save saveData = new Save(fileName);
+        saveData.saveToJSON(links);
+        System.out.println("\t Finish crawling from search page");
+        return links;
+    }
+
+    public static void main(String[] args) throws InterruptedException, IOException {
+        String keyword = "#Blockchain";
         WebDriver driver = WebDriverUtil.setUpDriver();
         TweetSearchPage searchPage = new TweetSearchPage(encode(keyword));
-        driver.get(encode(keyword));
-        Thread.sleep(5000);
-        Set<String> tweetLinks = searchPage.getElementsByScroll(driver, 2, Page.tweetCard);
-        System.out.println("\t Finish crawling from search page");
+        Set<String> tweetLinks = searchPage.crawlLinks(driver, Page.tweetCard, "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\linkBlockchain.json" );
 
-        System.out.println("Start crawling details of Tweet!");
-        List<TweetPage> tweetsCrawl = new ArrayList<>();
-        List<UserPage> usersCrawl = new ArrayList<>();
-        Set<String> tweetLinksCrawl = new HashSet<>();
-        Set<String> userIdCrawl = new HashSet<>();
-        for (String link : tweetLinks) {
-            if(!tweetLinksCrawl.contains(link)){
-                tweetLinksCrawl.add(link);
-                System.out.println("\t\t" + link);
-                TweetPage tweet = new TweetPage(link);
-                UserPage user = new UserPage(tweet.getAuthor());
-                tweet.extractAllInfo(driver, 100);
-                tweetsCrawl.add(tweet);
-                if(!userIdCrawl.contains(tweet.getAuthor())){
-                    userIdCrawl.add(tweet.getAuthor());
-                    user.extractAllInfo(driver, 5, 100);
-                    usersCrawl.add(user);
-                }
-            }
-        }
-        Save saveTweetData = new Save("D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\testTweet.json");
-        saveTweetData.saveToJSON(tweetsCrawl);
-        System.out.println("Save successfully!");
-        Save saveUserData = new Save("D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\testUser.json");
-        saveUserData.saveToJSON(usersCrawl);
-        System.out.println("Finish crawling details of Tweet!");
+
     }
 }

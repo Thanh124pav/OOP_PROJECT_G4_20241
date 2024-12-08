@@ -10,8 +10,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Page {
-    protected static String tweetCard = "a.css-146c3p1.r-bcqeeo.r-1ttztb7.r-qvutc0.r-37j5jr.r-a023e6.r-rjixqe.r-16dba41.r-xoduu5.r-1q142lx.r-1w6e6rj.r-9aw3ui.r-3s2u2q.r-1loqt21";
-    protected static String userCard = "a:not([tabindex='-1']).css-175oi2r.r-1wbh5a2.r-dnmrzs.r-1ny4l3l.r-1loqt21";
+    protected static String primaryColumn = "div[data-testid='primaryColumn'] ";
+    protected static String tweetCard = primaryColumn + "a.css-146c3p1.r-bcqeeo.r-1ttztb7.r-qvutc0.r-37j5jr.r-a023e6.r-rjixqe.r-16dba41.r-xoduu5.r-1q142lx.r-1w6e6rj.r-9aw3ui.r-3s2u2q.r-1loqt21";
+    protected static String userCard = primaryColumn + "a:not([tabindex='-1']).css-175oi2r.r-1wbh5a2.r-dnmrzs.r-1ny4l3l.r-1loqt21";
 
     protected String link;
     public Page(){};
@@ -19,10 +20,11 @@ public class Page {
         this.link = link;
     }
 
+
     static void scrollUp(JavascriptExecutor js) throws InterruptedException {
         js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
         System.out.println("Go to the bottom of page!");
-        Thread.sleep(5000);
+        Thread.sleep(10000);
     }
 
     protected Set<String> getElementsByScroll(WebDriver driver, int limit, String query) throws InterruptedException {
@@ -43,7 +45,7 @@ public class Page {
             pageElements.addAll(extractInfoBySCroll(newElements));
             scrollUp(js);
         }
-        System.out.println("finish crawling!");
+        System.out.printf("finish crawling %d elements!\n", pageElements.size());
         return pageElements;
     }
 
@@ -55,12 +57,12 @@ public class Page {
             Page page = new Page(link);
             if(!links.contains(link)){
                 links.add(link);
-                //basicInfos.add(page);
-                System.out.println("\t" + link +  " - " + "added!");
+                //System.out.println("\t" + link +  " - " + "added!");
             }
         }
         return links;
     };
+
 
 
 }
