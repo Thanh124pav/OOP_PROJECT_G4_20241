@@ -29,6 +29,7 @@ public class Page {
 
     protected Set<String> getElementsByScroll(WebDriver driver, int limit, String query) throws InterruptedException {
         System.out.println("Crawl elements!");
+        Thread.sleep(5000);
         JavascriptExecutor js = (JavascriptExecutor) driver;
         Set<String> pageElements = new HashSet<>();
         System.out.println(query);

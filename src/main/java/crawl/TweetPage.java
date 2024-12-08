@@ -57,7 +57,7 @@ public class TweetPage extends Page{
     }
     public void extractDetails(WebDriver driver) throws InterruptedException, IOException {
         driver.get(tweetUrl);
-        Thread.sleep(4000);
+        Thread.sleep(5000);
 
         content = driver.findElement(By.cssSelector(contentCard)).getText();
         Set<WebElement> hashtagCards = new HashSet<>(driver.findElements(By.cssSelector(TweetPage.hashtagCard)));
@@ -157,17 +157,19 @@ public class TweetPage extends Page{
         dataTweets.addAll(dataBlockchain);
         dataTweets.addAll(dataBlockchainBonus);
         dataTweets.addAll(dataWeb3);
-        System.out.printf("Number of tweets crawled %d\n", dataTweets.size());
+        List<String> data = new ArrayList<>(dataTweets);
+        List<String> subData = data.subList(45, data.size());
 
         System.out.println("Start crawling details of Tweet!");
         List<TweetPage> tweetsCrawl = new ArrayList<>();
         List<UserPage> usersCrawl = new ArrayList<>();
         Set<String> tweetLinksCrawl = new HashSet<>();
         Set<String> userIdCrawl = new HashSet<>();
-        int i = 0;
+
+        int i = 45;
         WebDriver driver = WebDriverUtil.setUpDriver();
 
-        for (String link : dataTweets){
+        for (String link : subData){
             if(!tweetLinksCrawl.contains(link) ) {
                 tweetLinksCrawl.add(link);
                 i+=1;
@@ -184,10 +186,10 @@ public class TweetPage extends Page{
             }
             System.out.printf("finish %d-th elements", i);
             if (i%5 == 0){
-                String fileTweet = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\TweetBlc_Web3.json" + i;
+                String fileTweet = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\TweetBlc_Web3_" + i + ".json";
                 Save saveTweetData = new Save(fileTweet);
                 saveTweetData.saveToJSON(tweetsCrawl);
-                String fileUser = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\UserBlc_Web3.json" + i;
+                String fileUser = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\UserBlc_Web3_" + i + ".json" ;
                 Save saveUserData = new Save(fileUser);
                 saveUserData.saveToJSON(usersCrawl);
                 tweetsCrawl.clear();
@@ -195,12 +197,11 @@ public class TweetPage extends Page{
                 System.out.printf("Save %d elements successfully!", i);
             }
         }
-        Save saveTweetData = new Save("D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\Tweet12_8_2_26.json");
+        Save saveTweetData = new Save("D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\Tweet12_8.json");
         saveTweetData.saveToJSON(tweetsCrawl);
         System.out.println("Save successfully!");
-        Save saveUserData = new Save("D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\User12_8_2_26.json");
+        Save saveUserData = new Save("D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\User12_8.json");
         saveUserData.saveToJSON(usersCrawl);
         System.out.println("Finish crawling details of Tweet!");
     }
-
 }
