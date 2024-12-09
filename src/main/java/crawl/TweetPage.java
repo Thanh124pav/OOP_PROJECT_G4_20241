@@ -141,32 +141,34 @@ public class TweetPage extends Page{
     }
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        Set<String> dataBlockchain = Save.loadTweetJSON(
-                "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\linkBlockchain.json",
+        Set<String> dataBTC = Save.loadTweetJSON(
+                "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\linkBTC.json",
                 new TypeReference<Set<String>>() {}
         );
-        Set<String> dataBlockchainBonus = Save.loadTweetJSON(
-                "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\tweetlinks10000.json",
+        Set<String> dataETC = Save.loadTweetJSON(
+                "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\linkETC.json",
                 new TypeReference<Set<String>>() {}
         );
-        Set<String> dataWeb3 = Save.loadTweetJSON(
-                "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\linkWeb3.json",
+        Set<String> dataCrypto = Save.loadTweetJSON(
+                "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\linkCrypto10000.json",
                 new TypeReference<Set<String>>() {}
         );
         Set<String> dataTweets = new HashSet<>();
-        dataTweets.addAll(dataBlockchain);
-        dataTweets.addAll(dataBlockchainBonus);
-        dataTweets.addAll(dataWeb3);
+        dataTweets.addAll(dataBTC);
+        dataTweets.addAll(dataETC);
+        dataTweets.addAll(dataCrypto);
+        Save saveBlc_Web3 = new Save("linkBTC_ETC_Cryto.json");
+        saveBlc_Web3.saveToJSON(dataTweets);
         List<String> data = new ArrayList<>(dataTweets);
-        List<String> subData = data.subList(45, data.size());
+        List<String> subData = data.subList(25, data.size());
 
-        System.out.println("Start crawling details of Tweet!");
+        System.out.printf("Start crawling details of %d Tweets!", subData.size());
         List<TweetPage> tweetsCrawl = new ArrayList<>();
         List<UserPage> usersCrawl = new ArrayList<>();
         Set<String> tweetLinksCrawl = new HashSet<>();
         Set<String> userIdCrawl = new HashSet<>();
 
-        int i = 45;
+        int i = 25;
         WebDriver driver = WebDriverUtil.setUpDriver();
 
         for (String link : subData){
@@ -176,31 +178,30 @@ public class TweetPage extends Page{
                 System.out.println("\t" + link);
                 TweetPage tweet = new TweetPage(link);
                 UserPage user = new UserPage(tweet.getAuthor());
-                tweet.extractAllInfo(driver, 1000);
+                tweet.extractAllInfo(driver, 10);
                 tweetsCrawl.add(tweet);
                 if(!userIdCrawl.contains(tweet.getAuthor())){
                     userIdCrawl.add(tweet.getAuthor());
-                    user.extractAllInfo(driver, 5, 1000);
+                    user.extractAllInfo(driver, 5, 10);
                     usersCrawl.add(user);
                 }
             }
-            System.out.printf("finish %d-th elements", i);
+            System.out.printf("finish %d-th elements\n", i);
             if (i%5 == 0){
-                String fileTweet = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\TweetBlc_Web3_" + i + ".json";
+                String fileTweet = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\small_data\\TweetBTC_ETC_Crypto_" + i + ".json";
                 Save saveTweetData = new Save(fileTweet);
                 saveTweetData.saveToJSON(tweetsCrawl);
-                String fileUser = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\UserBlc_Web3_" + i + ".json" ;
+                String fileUser = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\small_data\\UserBTC_ETC_Crypto_" + i + ".json" ;
                 Save saveUserData = new Save(fileUser);
                 saveUserData.saveToJSON(usersCrawl);
                 tweetsCrawl.clear();
                 usersCrawl.clear();
-                System.out.printf("Save %d elements successfully!", i);
+                System.out.printf("Save %d elements successfully!\n", i);
             }
         }
-        Save saveTweetData = new Save("D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\Tweet12_8.json");
+        Save saveTweetData = new Save("D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\small_data\\TweetBTC_ETC_Crypto_" + i +".json");
         saveTweetData.saveToJSON(tweetsCrawl);
-        System.out.println("Save successfully!");
-        Save saveUserData = new Save("D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\User12_8.json");
+        Save saveUserData = new Save("D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\small_data\\UserBTC_ETC_Crypto_" + i + ".json");
         saveUserData.saveToJSON(usersCrawl);
         System.out.println("Finish crawling details of Tweet!");
     }

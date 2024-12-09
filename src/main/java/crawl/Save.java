@@ -18,8 +18,6 @@ public class Save {
         this.fileName = fileName;
     }
 
-
-
     public Save(String fileName, Set<TweetPage> tweets, Set<UserPage> users) {
         this.fileName = fileName;
         this.tweets = tweets;
@@ -49,26 +47,26 @@ public class Save {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        Set<TweetPage> dataTweet35to75 = new HashSet<>();
-        Set<UserPage> dataUsers35to75 = new HashSet<>();
-        for (int i = 40; i <= 75; i += 5){
-            String fileNameTweet = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\TweetBlc_Web3_" + i + ".json";
+        Set<TweetPage> dataTweets = new HashSet<>();
+        Set<UserPage> dataUsers = new HashSet<>();
+        for (int i = 5; i <= 25; i += 5){
+            String fileNameTweet = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\small_data\\TweetBTC_ETC_Crypto_" + i + ".json";
             Set<TweetPage> subDataTweets = Save.loadTweetJSON(
                     fileNameTweet,
                     new TypeReference<Set<TweetPage>>() {}
             );
-            dataTweet35to75.addAll(subDataTweets);
+            dataTweets.addAll(subDataTweets);
 
-            String fileNameUser = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\UserBlc_Web3_" + i + ".json";
+            String fileNameUser = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\small_data\\UserBTC_ETC_Crypto_" + i + ".json";
             Set<UserPage> subDataUsers = Save.loadTweetJSON(
                     fileNameUser,
                     new TypeReference<Set<UserPage>>() {}
             );
-            dataUsers35to75.addAll(subDataUsers);
+            dataUsers.addAll(subDataUsers);
         }
 
-        String fileName = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\Data35to75Blc_Web3.json";
-        Save save = new Save(fileName, dataTweet35to75, dataUsers35to75);
+        String fileName = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\Data25BTC_ETC_Crypto.json";
+        Save save = new Save(fileName, dataTweets, dataUsers);
         save.saveToJSON();
         System.out.println("Merge and save sucessfully!");
     }

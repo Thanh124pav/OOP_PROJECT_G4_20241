@@ -1,0 +1,45 @@
+[ {
+  "profileUrl" : "https://x.com/billfour",
+  "userId" : "illfour",
+  "userName" : "Bill Miller",
+  "bio" : "logician. investor. #bitcoin",
+  "profileImageUrl" : "",
+  "followersCount" : "16,9 N",
+  "followingCount" : "600",
+  "tweetCount" : 5,
+  "tweets" : [ "1843281989543281118", "1865518878115115057", "1865015123993096251", "1864853017943527819", "1864718185427058762" ],
+  "following" : [ "saifedean", "LynAldenContact", "jameslavish", "woonomic", "JeffBooth", "PrestonPysh", "DylanLeClair_", "Breedlove22", "adam3us", "JasonPLowery", "TuurDemeester", "IIICapital", "AlexWilsonTGB", "lopp", "CaitlinLong_", "WClementeIII", "FossGregfoss", "coryklippsten", "PeterMcCormack", "DocumentingBTC", "jackmallers" ]
+}, {
+  "profileUrl" : "https://x.com/BitcoinMagazine",
+  "userId" : "itcoinMagazine",
+  "userName" : "Bitcoin Magazine",
+  "bio" : "The Most Trusted Voice In #Bitcoin  https://bitcoinmagazine.com • Join us at Bitcoin 2025  https://bit.ly/B25-BM10 • Find us http://linktr.ee/btcinc •",
+  "profileImageUrl" : "",
+  "followersCount" : "3,4 Tr",
+  "followingCount" : "1.116",
+  "tweetCount" : 12,
+  "tweets" : [ "1865388467363991894", "1865419217295511707", "1865469961646309634", "1865955587118243958", "1865959575708729713", "1865359115926544475", "1865127575481168202", "1865238871845298560", "1865897629130854561", "1865160218969092261", "1864498414500659433", "1865402980637306893" ],
+  "following" : [ "TheBitcoinConf", "CarlBMenger", "JeffBooth", "PrestonPysh", "Breedlove22", "adam3us", "hodlonaut", "maxkeiser", "JasonPLowery", "natbrunell", "gladstein", "danheld", "Excellion", "FossGregfoss", "jimmysong", "coryklippsten", "ImagineBitcoin", "BitcoinIsSaving", "DocumentingBTC", "jackmallers" ]
+}, {
+  "profileUrl" : "https://x.com/techconcatalina",
+  "userId" : "echconcatalina",
+  "userName" : "Catalina Castro",
+  "bio" : "Todo sobre #Bitcoin y #Criptomonedas techconcatalina@gmail.com",
+  "profileImageUrl" : "",
+  "followersCount" : "255,1 N",
+  "followingCount" : "1.279",
+  "tweetCount" : 12,
+  "tweets" : [ "1864846923737223433", "1864822099002413139", "1864762046480576784", "1864715912454009199", "1864808545369170122", "1865013789013192959", "1865846784183959656", "1864656827868164437", "1864755763035435467", "1865834494386721101", "1865898513785049144", "1864671017924219335" ],
+  "following" : [ "LOReBitcoin", "TheWinkyverse_", "CriptoNoticias", "juanbiter", "mattunchi", "lunaticoin", "MundoCrypto_ES", "Cypher1984", "miprimeracripto", "Balo_investor", "ManiThawani", "es_tradingview", "criptobastardo", "iceuve", "healthy_pockets", "BitFinanzas", "ORamosBets", "DanielMuvdiYT", "DBATTAGLIAYtube", "BinanceLATAM" ]
+}, {
+  "profileUrl" : "https://x.com/EthereumThaila1",
+  "userId" : "thereumThaila1",
+  "userName" : "Mahachai ",
+  "bio" : "Just a page for news about Ethereum Ecosystem for Thais. Not Financial Advice (ไม่ใช่คำแนะนำการลงทุน) ย้ำไปลงทุน defi เหรียญไหนก็แล้วแต่ หาซื้อประกันไว้ด้วย",
+  "profileImageUrl" : "",
+  "followersCount" : "37,7 N",
+  "followingCount" : "3.413",
+  "tweetCount" : 5,
+  "tweets" : [ "1865944646809239712", "1863934890431127716", "1865960829713285540", "1865945580297724097", "1865929494399275149" ],
+  "following" : [ "0xairdropfarmer", "snowmoonrising", "CryptoDuck_TH", "piriya", "foozfan9", "siamblockchain", "slamboto_v2", "MissionSaturn", "BfDinvestor", "CryptoAliceTH", "pwittaya", "Eig_Banphot", "Galadriel_TX", "fluffyforger", "Crypto_TomP", "Psolemn", "sxicex", "jrpj__", "PROOFplatform", "InsomPoramin", "bitdroidth" ]
+} ]

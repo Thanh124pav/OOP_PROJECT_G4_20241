@@ -23,16 +23,16 @@ public class Page {
 
     static void scrollUp(JavascriptExecutor js) throws InterruptedException {
         js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-        System.out.println("Go to the bottom of page!");
+        //System.out.println("Go to the bottom of page!");
         Thread.sleep(10000);
     }
 
     protected Set<String> getElementsByScroll(WebDriver driver, int limit, String query) throws InterruptedException {
-        System.out.println("Crawl elements!");
+        //System.out.println("Crawl elements!");
         Thread.sleep(5000);
         JavascriptExecutor js = (JavascriptExecutor) driver;
         Set<String> pageElements = new HashSet<>();
-        System.out.println(query);
+        //System.out.println(query);
         Set<WebElement> elements = new HashSet<>();
         while(elements.size() < limit) {
             int oldSize = elements.size();
@@ -46,7 +46,7 @@ public class Page {
             pageElements.addAll(extractInfoBySCroll(newElements));
             scrollUp(js);
         }
-        System.out.printf("finish crawling %d elements!\n", pageElements.size());
+        //System.out.printf("finish crawling %d elements!\n", pageElements.size());
         return pageElements;
     }
 

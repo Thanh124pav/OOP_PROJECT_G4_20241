@@ -1,6 +1,8 @@
 package crawl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -81,9 +83,12 @@ public class UserPage extends Page{
         Thread.sleep(4000);
 
         userName = driver.findElement(By.cssSelector(userNameCard)).getText();
-        WebElement bioElement = driver.findElement(By.cssSelector(bioCard));
-        if(bioElement != null){
-            bio = bioElement.getText();
+
+        try {
+            WebElement bioElement = driver.findElement(By.cssSelector(bioCard));
+            bio =  bioElement.getText();
+        } catch (NoSuchElementException e) {
+            bio = "";
         }
         profileImageUrl = driver.findElement(By.cssSelector(imageCard)).getText();
         List<WebElement> follow = driver.findElements(By.cssSelector(followCard));
@@ -121,4 +126,49 @@ public class UserPage extends Page{
         }
         return ids;
     };
+
+    public static void main(String[] args) throws IOException {
+        Set<TweetPage> dataTweets = new HashSet<>();
+        Set<UserPage> dataUsers = new HashSet<>();
+        for (int i = 5; i <= 25; i += 5){
+            String fileNameTweet = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\small_data\\TweetBTC_ETC_Crypto_" + i + ".json";
+            Set<TweetPage> subDataTweets = Save.loadTweetJSON(
+                    fileNameTweet,
+                    new TypeReference<Set<TweetPage>>() {}
+            );
+            dataTweets.addAll(subDataTweets);
+
+            String fileNameUser = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\small_data\\UserBTC_ETC_Crypto_" + i + ".json";
+            Set<UserPage> subDataUsers = Save.loadTweetJSON(
+                    fileNameUser,
+                    new TypeReference<Set<UserPage>>() {}
+            );
+            dataUsers.addAll(subDataUsers);
+        }
+        for (int i = 5; i <= 110; i += 5){
+            String fileNameTweet = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\small_data\\TweetBlc_Web3_" + i + ".json";
+            Set<TweetPage> subDataTweets = Save.loadTweetJSON(
+                    fileNameTweet,
+                    new TypeReference<Set<TweetPage>>() {}
+            );
+            dataTweets.addAll(subDataTweets);
+
+            String fileNameUser = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\small_data\\UserBlc_Web3_" + i + ".json";
+            Set<UserPage> subDataUsers = Save.loadTweetJSON(
+                    fileNameUser,
+                    new TypeReference<Set<UserPage>>() {}
+            );
+            dataUsers.addAll(subDataUsers);
+        }
+        Set<String> tweetIds = new HashSet<>();
+        Set<String> userIds = new HashSet<>();
+        for (TweetPage tweet: dataTweets){
+            userIds.addAll(tweet.getRetweeters());
+        }
+        for (UserPage user: dataUsers){
+            tweetIds.addAll(user.getTweets());
+        }
+        System.out.println(tweetIds.size());
+        System.out.println(userIds.size());
+    }
 }
