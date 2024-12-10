@@ -48,11 +48,10 @@ public class TweetSearchPage extends Page{
     }
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        String keyword = "Blockchain";
+        String keyword = "#Bitcoin";
         WebDriver driver = WebDriverUtil.setUpDriver();
         TweetSearchPage searchPage = new TweetSearchPage(encode(keyword));
-        Set<String> tweetLinks = searchPage.crawlLinks(driver, Page.tweetCard, "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\linkBlockchain.json" );
-
+        searchPage.crawlLinks(driver, Page.tweetCard, "src\\main\\resources\\linkHBitcoin.json" );
 
     }
 }

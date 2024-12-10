@@ -106,10 +106,21 @@ public class UserPage extends Page{
         int count = -1;
         try {
             count = Integer.parseInt(followersCount);
-            return count > 5000;
-        } catch (NumberFormatException e) {
-            return true;
+            if (count > 0) { // có thể chuyển sang số nguyên được -->
+                return false;
+            }
+        } catch (NumberFormatException e) { // số lượng followers lớn hơn 1000
+            String[] parts = followersCount.split(" ");
+            if(!parts[1].equals("N")){
+                return true;
+            }
+            String[] subParts = parts[0].split(",");
+            int firstDigit = Integer.parseInt(subParts[0]);
+            if(firstDigit >= 5){
+                return true;
+            }
         }
+        return false;
     }
 
     public void extractFollowing(WebDriver driver, int limit) throws InterruptedException, IOException {
@@ -121,7 +132,7 @@ public class UserPage extends Page{
 
     public void extractAllInfo(WebDriver driver, int limitTweets, int limitFollowing) throws InterruptedException, IOException {
         extractDetails(driver);
-        extractTweets(driver, limitTweets);
+        //extractTweets(driver, limitTweets);
         extractFollowing(driver, limitFollowing);
     }
     @Override
@@ -147,62 +158,5 @@ public class UserPage extends Page{
     @Override
     public int hashCode() {
         return Objects.hash(userId);
-    }
-
-
-    public static void main(String[] args) throws IOException, InterruptedException {
-        Set<TweetPage> dataTweets = Save.loadJSON(
-                "src/main/resources/OldTweet.json",
-                new TypeReference<Set<TweetPage>>() {}
-        );
-        Set<UserPage> dataUsers = Save.loadJSON(
-                "src/main/resources/OldUser.json",
-                new TypeReference<Set<UserPage>>() {}
-        );
-
-        Set<String> userRetweets = new HashSet<>();
-        Set<String> userCrawleds = new HashSet<>();
-        Set<String> userNeedCrawl = new HashSet<>();
-        for (TweetPage tweet: dataTweets){
-            userRetweets.addAll(tweet.getRetweeters());
-        }
-        for (UserPage user: dataUsers){
-            userCrawleds.add(user.getUserId());
-        }
-
-        WebDriver driver = WebDriverUtil.setUpDriver();
-        for(String userId: userRetweets){
-            boolean checkToPrint = false;
-            if(!userCrawleds.contains(userId)){
-                UserPage user = new UserPage(userId);
-                try {
-                    user.extractDetails(driver);
-                }
-                catch (Exception e){
-                    e.printStackTrace();
-                    continue;
-                }
-                if(user.checkFollowersCount()){
-                    userNeedCrawl.add(user.getUserId());
-                    checkToPrint = true;
-                }
-            }
-            if( checkToPrint && userNeedCrawl.size()%50 == 1){
-                System.out.printf("Find out %d users with more than 5K followers\n", userNeedCrawl.size());
-            }
-
-        }
-        Save saveUsers = new Save("src/main/resources/small_data/UserRetweetsNeedCrawl.json");
-        saveUsers.saveToJSON(userRetweets);
-
-//        System.out.println(dataUsers.size());
-//        System.out.println(dataTweets.size());
-//        System.out.println(userRetweets.size());
-//        Set<UserPage> dataUsersCrawled = new HashSet<>(
-//                Save.loadJSON("src/main/resources/small_data/userRetweets.json",
-//                        new TypeReference<Set<UserPage>>() {}
-//                )
-//        );
-//        System.out.println(dataUsersCrawled.size());
     }
 }
