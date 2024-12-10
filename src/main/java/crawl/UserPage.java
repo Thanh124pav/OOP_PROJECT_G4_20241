@@ -106,21 +106,22 @@ public class UserPage extends Page{
         int count = -1;
         try {
             count = Integer.parseInt(followersCount);
-            if (count > 0) { // có thể chuyển sang số nguyên được -->
-                return false;
-            }
-        } catch (NumberFormatException e) { // số lượng followers lớn hơn 1000
-            String[] parts = followersCount.split(" ");
-            if(!parts[1].equals("N")){
-                return true;
-            }
-            String[] subParts = parts[0].split(",");
-            int firstDigit = Integer.parseInt(subParts[0]);
-            if(firstDigit >= 5){
-                return true;
-            }
+            return (count >  500);
+        } catch (NumberFormatException e) {
+            return true;// số lượng followers lớn hơn 1000
+//            String[] parts = followersCount.split(" ");
+//            if(parts.length < 2){
+//                return false;
+//            }
+//            if(!parts[1].equals("N")){
+//                return true;
+//            }
+//            String[] subParts = parts[0].split(",");
+//            int firstDigit = Integer.parseInt(subParts[0]);
+//            if(firstDigit >= 5){
+//                return true;
+//            }
         }
-        return false;
     }
 
     public void extractFollowing(WebDriver driver, int limit) throws InterruptedException, IOException {

@@ -11,7 +11,7 @@ public class WebDriverUtil {
         new ProcessBuilder("taskkill", "/F", "/IM", "msedge.exe").start().waitFor();
         WebDriverManager.edgedriver().setup();
         EdgeOptions options = new EdgeOptions();
-        options.addArguments("--user-data-dir=C:\\Users\\PAVT\\AppData\\Local\\Microsoft\\Edge\\User Data");
+        options.addArguments("--user-data-dir=C:\\Users\\USER\\AppData\\Local\\Microsoft\\Edge\\User Data");
         options.addArguments("--profile-directory=Default");
         options.addArguments("--disable-extensions");
         options.addArguments("--remote-debugging-port=9222");

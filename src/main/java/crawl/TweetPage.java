@@ -158,7 +158,7 @@ public class TweetPage extends Page{
                 Save.loadJSON("src/main/resources/linkBTC_ETC_Cryto.json", new TypeReference<Set<String>>() {})
         );
         List<String> data = new ArrayList<>(dataTweets);
-        List<String> subData = data.subList(40, data.size());
+        List<String> subData = data.subList(54, data.size());
 
         System.out.printf("Start crawling details of %d Tweets!", subData.size());
         List<TweetPage> tweetsCrawl = new ArrayList<>();
@@ -166,39 +166,40 @@ public class TweetPage extends Page{
         Set<String> tweetLinksCrawl = new HashSet<>();
         Set<String> userIdCrawl = new HashSet<>();
 
-        int i = 40;
+        int i = 54;
         WebDriver driver = WebDriverUtil.setUpDriver();
         for (String link : subData){
             if(!tweetLinksCrawl.contains(link) ) {
                 tweetLinksCrawl.add(link);
                 i+=1;
                 System.out.println("\t" + link);
-                try {
-                    TweetPage tweet = new TweetPage(link);
-                    UserPage user = new UserPage(tweet.getAuthor());
-                    tweet.extractAllInfo(driver, 30);
-                    tweetsCrawl.add(tweet);
-                    if(!userIdCrawl.contains(tweet.getAuthor())){
-                        userIdCrawl.add(tweet.getAuthor());
-                        user.extractAllInfo(driver, 5, 30);
-                        usersCrawl.add(user);
-                    }
-                    for(String userId: tweet.getRetweeters()){
-                        if(!userIdCrawl.contains(userId)){
-                            userIdCrawl.add(userId);
-                            UserPage retweeter = new UserPage(userId);
+                TweetPage tweet = new TweetPage(link);
+                UserPage user = new UserPage(tweet.getAuthor());
+                tweet.extractAllInfo(driver, 30);
+                tweetsCrawl.add(tweet);
+                if(!userIdCrawl.contains(tweet.getAuthor())){
+                    userIdCrawl.add(tweet.getAuthor());
+                    user.extractAllInfo(driver, 5, 30);
+                    usersCrawl.add(user);
+                }
+                for(String userId: tweet.getRetweeters()){
+                    if(!userIdCrawl.contains(userId)){
+                        userIdCrawl.add(userId);
+                        UserPage retweeter = new UserPage(userId);
+                        try{
                             retweeter.extractDetails(driver);
                             if(retweeter.checkFollowersCount()){
                                 retweeter.extractFollowing(driver, 30);
                                 usersCrawl.add(retweeter);
                             }
                         }
-                    }
-                }catch (Exception e){
-                    e.printStackTrace();
-                    continue;
-                }
+                        catch (Exception e){
+                            e.printStackTrace();
+                            continue;
+                        }
 
+                    }
+                }
             }
             System.out.printf("finish %d-th element\n", i);
             String fileTweet = "src\\main\\resources\\small_data\\TweetBTC_ETC_Crypto_" + i + ".json";
