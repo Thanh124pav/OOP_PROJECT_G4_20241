@@ -111,6 +111,9 @@ public class UserPage extends Page{
             }
         } catch (NumberFormatException e) { // số lượng followers lớn hơn 1000
             String[] parts = followersCount.split(" ");
+            if(parts.length < 2){
+                return false;
+            }
             if(!parts[1].equals("N")){
                 return true;
             }
@@ -159,4 +162,5 @@ public class UserPage extends Page{
     public int hashCode() {
         return Objects.hash(userId);
     }
+
 }

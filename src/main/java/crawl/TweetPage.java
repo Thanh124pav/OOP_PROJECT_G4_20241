@@ -173,30 +173,32 @@ public class TweetPage extends Page{
                 tweetLinksCrawl.add(link);
                 i+=1;
                 System.out.println("\t" + link);
-                try {
-                    TweetPage tweet = new TweetPage(link);
-                    UserPage user = new UserPage(tweet.getAuthor());
-                    tweet.extractAllInfo(driver, 30);
-                    tweetsCrawl.add(tweet);
-                    if(!userIdCrawl.contains(tweet.getAuthor())){
-                        userIdCrawl.add(tweet.getAuthor());
-                        user.extractAllInfo(driver, 5, 30);
-                        usersCrawl.add(user);
-                    }
-                    for(String userId: tweet.getRetweeters()){
-                        if(!userIdCrawl.contains(userId)){
-                            userIdCrawl.add(userId);
-                            UserPage retweeter = new UserPage(userId);
+                TweetPage tweet = new TweetPage(link);
+                UserPage user = new UserPage(tweet.getAuthor());
+                tweet.extractAllInfo(driver, 30);
+                tweetsCrawl.add(tweet);
+                if(!userIdCrawl.contains(tweet.getAuthor())){
+                    userIdCrawl.add(tweet.getAuthor());
+                    user.extractAllInfo(driver, 5, 30);
+                    usersCrawl.add(user);
+                }
+                for(String userId: tweet.getRetweeters()){
+                    if(!userIdCrawl.contains(userId)){
+                        userIdCrawl.add(userId);
+                        UserPage retweeter = new UserPage(userId);
+                        try{
                             retweeter.extractDetails(driver);
                             if(retweeter.checkFollowersCount()){
                                 retweeter.extractFollowing(driver, 30);
                                 usersCrawl.add(retweeter);
                             }
                         }
+                        catch (Exception e){
+                            e.printStackTrace();
+                            continue;
+                        }
+
                     }
-                }catch (Exception e){
-                    e.printStackTrace();
-                    continue;
                 }
 
             }
