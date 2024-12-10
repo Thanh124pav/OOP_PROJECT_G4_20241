@@ -33,7 +33,7 @@ public class Save {
         mapper.writerWithDefaultPrettyPrinter().writeValue(new File(fileName), o);
     }
 
-    public static <T> Set<T> loadTweetJSON(String fileName, TypeReference<Set<T>> typeReference) throws IOException {
+    public static <T> Set<T> loadJSON(String fileName, TypeReference<Set<T>> typeReference) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(new File(fileName), typeReference);
     }
@@ -51,23 +51,45 @@ public class Save {
         Set<UserPage> dataUsers = new HashSet<>();
         for (int i = 5; i <= 25; i += 5){
             String fileNameTweet = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\small_data\\TweetBTC_ETC_Crypto_" + i + ".json";
-            Set<TweetPage> subDataTweets = Save.loadTweetJSON(
+            Set<TweetPage> subDataTweets = Save.loadJSON(
                     fileNameTweet,
-                    new TypeReference<Set<TweetPage>>() {}
+                    new TypeReference<>() {
+                    }
             );
             dataTweets.addAll(subDataTweets);
 
             String fileNameUser = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\small_data\\UserBTC_ETC_Crypto_" + i + ".json";
-            Set<UserPage> subDataUsers = Save.loadTweetJSON(
+            Set<UserPage> subDataUsers = Save.loadJSON(
                     fileNameUser,
-                    new TypeReference<Set<UserPage>>() {}
+                    new TypeReference<>() {}
+            );
+            dataUsers.addAll(subDataUsers);
+        }
+        for (int i = 5; i <= 110; i += 5){
+            String fileNameTweet = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\small_data\\TweetBlc_Web3_" + i + ".json";
+            Set<TweetPage> subDataTweets = Save.loadJSON(
+                    fileNameTweet,
+                    new TypeReference<>() {}
+            );
+            dataTweets.addAll(subDataTweets);
+
+            String fileNameUser = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\small_data\\UserBlc_Web3_" + i + ".json";
+            Set<UserPage> subDataUsers = Save.loadJSON(
+                    fileNameUser,
+                    new TypeReference<>() {}
             );
             dataUsers.addAll(subDataUsers);
         }
 
-        String fileName = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\Data25BTC_ETC_Crypto.json";
+        String fileName = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\Old.json";
+        String fileTweet = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\OldTweet.json";
+        String fileUser = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\OldUser.json";
         Save save = new Save(fileName, dataTweets, dataUsers);
+        Save saveTweet = new Save(fileTweet);
+        Save saveUser = new Save(fileUser);
         save.saveToJSON();
+        saveTweet.saveToJSON(dataTweets);
+        saveUser.saveToJSON(dataUsers);
         System.out.println("Merge and save sucessfully!");
     }
 

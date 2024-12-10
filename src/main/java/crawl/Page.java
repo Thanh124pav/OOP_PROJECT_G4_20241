@@ -5,7 +5,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,46 +19,34 @@ public class Page {
         this.link = link;
     }
 
-
     static void scrollUp(JavascriptExecutor js) throws InterruptedException {
         js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-        //System.out.println("Go to the bottom of page!");
         Thread.sleep(10000);
     }
 
     protected Set<String> getElementsByScroll(WebDriver driver, int limit, String query) throws InterruptedException {
-        //System.out.println("Crawl elements!");
-        Thread.sleep(5000);
+        Thread.sleep(10000);
         JavascriptExecutor js = (JavascriptExecutor) driver;
         Set<String> pageElements = new HashSet<>();
-        //System.out.println(query);
-        Set<WebElement> elements = new HashSet<>();
-        while(elements.size() < limit) {
-            int oldSize = elements.size();
+        while(pageElements.size() < limit) {
+            int oldSize = pageElements.size();
             Set<WebElement> newElements = new HashSet<>(driver.findElements(By.cssSelector(query)));
-            elements.addAll(newElements);
-            System.out.println(newElements.size());
-            if(elements.size() == oldSize){
+            Set<String> newLinks = extractInfoBySCroll(newElements);
+            pageElements.addAll(newLinks);
+            if(pageElements.size() == oldSize){
                 System.out.println("get all elements, break the loop!");
                 break;
             }
-            pageElements.addAll(extractInfoBySCroll(newElements));
             scrollUp(js);
         }
-        //System.out.printf("finish crawling %d elements!\n", pageElements.size());
         return pageElements;
     }
 
     protected Set<String> extractInfoBySCroll(Set<WebElement> elements){
-        //Set<Page> basicInfos = new HashSet<>();
         Set<String> links = new HashSet<>();
         for (WebElement element: elements) {
             String link = element.getAttribute("href");
-            Page page = new Page(link);
-            if(!links.contains(link)){
-                links.add(link);
-                //System.out.println("\t" + link +  " - " + "added!");
-            }
+            links.add(link);
         }
         return links;
     };

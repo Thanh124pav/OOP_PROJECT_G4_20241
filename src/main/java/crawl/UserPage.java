@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class UserPage extends Page{
@@ -74,16 +75,14 @@ public class UserPage extends Page{
 
     public UserPage(){};
     public UserPage(String userId){
-        this.userId = userId.substring(1);
+        this.userId = userId;
         this.profileUrl = "https://x.com/" + userId;
     }
 
     public void extractDetails(WebDriver driver) throws InterruptedException, IOException {
         driver.get(profileUrl);
-        Thread.sleep(4000);
-
+        Thread.sleep(3000);
         userName = driver.findElement(By.cssSelector(userNameCard)).getText();
-
         try {
             WebElement bioElement = driver.findElement(By.cssSelector(bioCard));
             bio =  bioElement.getText();
@@ -101,6 +100,16 @@ public class UserPage extends Page{
         Thread.sleep(4000);
         tweets = getElementsByScroll(driver, limit, Page.tweetCard);
         tweetCount = tweets.size();
+    }
+
+    public boolean checkFollowersCount(){
+        int count = -1;
+        try {
+            count = Integer.parseInt(followersCount);
+            return count > 5000;
+        } catch (NumberFormatException e) {
+            return true;
+        }
     }
 
     public void extractFollowing(WebDriver driver, int limit) throws InterruptedException, IOException {
@@ -127,48 +136,73 @@ public class UserPage extends Page{
         return ids;
     };
 
-    public static void main(String[] args) throws IOException {
-        Set<TweetPage> dataTweets = new HashSet<>();
-        Set<UserPage> dataUsers = new HashSet<>();
-        for (int i = 5; i <= 25; i += 5){
-            String fileNameTweet = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\small_data\\TweetBTC_ETC_Crypto_" + i + ".json";
-            Set<TweetPage> subDataTweets = Save.loadTweetJSON(
-                    fileNameTweet,
-                    new TypeReference<Set<TweetPage>>() {}
-            );
-            dataTweets.addAll(subDataTweets);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserPage userPage = (UserPage) o;
+        return Objects.equals(userId, userPage.userId);  // So sánh dựa trên thuộc tính id
+    }
 
-            String fileNameUser = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\small_data\\UserBTC_ETC_Crypto_" + i + ".json";
-            Set<UserPage> subDataUsers = Save.loadTweetJSON(
-                    fileNameUser,
-                    new TypeReference<Set<UserPage>>() {}
-            );
-            dataUsers.addAll(subDataUsers);
-        }
-        for (int i = 5; i <= 110; i += 5){
-            String fileNameTweet = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\small_data\\TweetBlc_Web3_" + i + ".json";
-            Set<TweetPage> subDataTweets = Save.loadTweetJSON(
-                    fileNameTweet,
-                    new TypeReference<Set<TweetPage>>() {}
-            );
-            dataTweets.addAll(subDataTweets);
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId);
+    }
 
-            String fileNameUser = "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\small_data\\UserBlc_Web3_" + i + ".json";
-            Set<UserPage> subDataUsers = Save.loadTweetJSON(
-                    fileNameUser,
-                    new TypeReference<Set<UserPage>>() {}
-            );
-            dataUsers.addAll(subDataUsers);
-        }
-        Set<String> tweetIds = new HashSet<>();
-        Set<String> userIds = new HashSet<>();
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+        Set<TweetPage> dataTweets = Save.loadJSON(
+                "src/main/resources/OldTweet.json",
+                new TypeReference<Set<TweetPage>>() {}
+        );
+        Set<UserPage> dataUsers = Save.loadJSON(
+                "src/main/resources/OldUser.json",
+                new TypeReference<Set<UserPage>>() {}
+        );
+
+        Set<String> userRetweets = new HashSet<>();
+        Set<String> userCrawleds = new HashSet<>();
+        Set<String> userNeedCrawl = new HashSet<>();
         for (TweetPage tweet: dataTweets){
-            userIds.addAll(tweet.getRetweeters());
+            userRetweets.addAll(tweet.getRetweeters());
         }
         for (UserPage user: dataUsers){
-            tweetIds.addAll(user.getTweets());
+            userCrawleds.add(user.getUserId());
         }
-        System.out.println(tweetIds.size());
-        System.out.println(userIds.size());
+
+        WebDriver driver = WebDriverUtil.setUpDriver();
+        for(String userId: userRetweets){
+            boolean checkToPrint = false;
+            if(!userCrawleds.contains(userId)){
+                UserPage user = new UserPage(userId);
+                try {
+                    user.extractDetails(driver);
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                    continue;
+                }
+                if(user.checkFollowersCount()){
+                    userNeedCrawl.add(user.getUserId());
+                    checkToPrint = true;
+                }
+            }
+            if( checkToPrint && userNeedCrawl.size()%50 == 1){
+                System.out.printf("Find out %d users with more than 5K followers\n", userNeedCrawl.size());
+            }
+
+        }
+        Save saveUsers = new Save("src/main/resources/small_data/UserRetweetsNeedCrawl.json");
+        saveUsers.saveToJSON(userRetweets);
+
+//        System.out.println(dataUsers.size());
+//        System.out.println(dataTweets.size());
+//        System.out.println(userRetweets.size());
+//        Set<UserPage> dataUsersCrawled = new HashSet<>(
+//                Save.loadJSON("src/main/resources/small_data/userRetweets.json",
+//                        new TypeReference<Set<UserPage>>() {}
+//                )
+//        );
+//        System.out.println(dataUsersCrawled.size());
     }
 }

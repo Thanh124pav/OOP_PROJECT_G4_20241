@@ -1,10 +1,7 @@
 package crawl;
 
 //import graph.UserOld;
-import com.fasterxml.jackson.core.type.TypeReference;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,7 +37,7 @@ public class TweetSearchPage extends Page{
     }
 
     public Set<String> crawlLinks(WebDriver driver, String typeQuery, String fileName) throws IOException, InterruptedException {
-        System.out.printf(" Crawl tweets by: %s", this.link);
+        System.out.printf("Crawl tweets by: %s\n", this.link);
         driver.get(this.link);
         Thread.sleep(5000);
         Set<String> links = this.getElementsByScroll(driver, 1000, typeQuery);
@@ -51,7 +48,7 @@ public class TweetSearchPage extends Page{
     }
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        String keyword = "#Blockchain";
+        String keyword = "Blockchain";
         WebDriver driver = WebDriverUtil.setUpDriver();
         TweetSearchPage searchPage = new TweetSearchPage(encode(keyword));
         Set<String> tweetLinks = searchPage.crawlLinks(driver, Page.tweetCard, "D:\\Project\\OOP20241\\OOP_PROJECT_G4_20241\\src\\main\\resources\\linkBlockchain.json" );
