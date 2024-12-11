@@ -1,0 +1,34 @@
+[ {
+  "profileUrl" : "https://x.com/saylor",
+  "userId" : "saylor",
+  "userName" : "Michael Saylor",
+  "bio" : "#Bitcoin is http://Hope.com | $BTC Hodler | \n@MicroStrategy\n Founder & Chairman $MSTR | \n@MIT\n Aerospace | bio http://michael.com | free education http://saylor.org | Tweets are my own.",
+  "profileImageUrl" : "",
+  "followersCount" : "3.8M",
+  "followingCount" : "633",
+  "tweetCount" : 0,
+  "tweets" : null,
+  "following" : [ "TheCryptoLark", "danheld", "WClementeIII", "BitcoinMagazine", "intocryptoverse", "BTC_Archive", "100trillionUSD", "DocumentingBTC", "MMCrypto" ]
+}, {
+  "profileUrl" : "https://x.com/traderEcameron",
+  "userId" : "traderEcameron",
+  "userName" : "Cameron",
+  "bio" : "",
+  "profileImageUrl" : "",
+  "followersCount" : "1,659",
+  "followingCount" : "33",
+  "tweetCount" : 0,
+  "tweets" : null,
+  "following" : [ "KeanuTrades", "RealJGBanks", "Jduntrades", "FT__Trading", "blakestonks", "Strat_Trades", "LanesWRLD_", "AcetheKidTA", "itsCblast" ]
+}, {
+  "profileUrl" : "https://x.com/1sayl0rr",
+  "userId" : "1sayl0rr",
+  "userName" : "Mylla Manuella",
+  "bio" : "#Bitcoin is http://Hope.com | $BTC Hodler | \n@Microstrategy\n Founder & Chairman $MSTR | \n@MIT\n Aerospace | bio http://michael.com | free education http://saylor.org | Tweets are my own.",
+  "profileImageUrl" : "",
+  "followersCount" : "11.6K",
+  "followingCount" : "28",
+  "tweetCount" : 0,
+  "tweets" : null,
+  "following" : [ "lucasfresno", "paulocoelho", "GDellane", "thomaspower", "GiLancellotti", "Bugi1050527", "goradiorock", "mariagadu", "ivetesangalo" ]
+} ]

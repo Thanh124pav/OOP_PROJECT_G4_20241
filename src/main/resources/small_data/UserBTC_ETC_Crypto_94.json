@@ -1,0 +1,23 @@
+[ {
+  "profileUrl" : "https://x.com/_Tim4444",
+  "userId" : "_Tim4444",
+  "userName" : "Tim",
+  "bio" : "Inner Development, BTC & Crypto since 2016, Forest gardens & Permaculture",
+  "profileImageUrl" : "",
+  "followersCount" : "5,525",
+  "followingCount" : "1,325",
+  "tweetCount" : 0,
+  "tweets" : null,
+  "following" : [ "hiperpoliglota", "realsamho", "MSTRFullSend", "aboylivinginx", "ptn7781", "vi_nerd_", "zeeeemoney1", "taxiperruque", "nongduchuy123", "cryptosmallie" ]
+}, {
+  "profileUrl" : "https://x.com/0xPunk4700",
+  "userId" : "0xPunk4700",
+  "userName" : "Alex",
+  "bio" : "8 Years in Crypto | The ever-lucky golfer | No personal advice",
+  "profileImageUrl" : "",
+  "followersCount" : "981",
+  "followingCount" : "0",
+  "tweetCount" : 0,
+  "tweets" : null,
+  "following" : [ "FezBayc", "YoBoyTazz", "LVSpike420", "YatMuseum", "RiddlerNFT", "SebyGWeb3", "pixelbizeth", "fab_meth", "thedink_eth", "BazookaJNFT" ]
+} ]

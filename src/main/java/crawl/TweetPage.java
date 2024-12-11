@@ -158,7 +158,7 @@ public class TweetPage extends Page{
                 Save.loadJSON("src/main/resources/linkBTC_ETC_Cryto.json", new TypeReference<Set<String>>() {})
         );
         List<String> data = new ArrayList<>(dataTweets);
-        List<String> subData = data.subList(54, data.size());
+        List<String> subData = data.subList(116, data.size());
 
         System.out.printf("Start crawling details of %d Tweets!", subData.size());
         List<TweetPage> tweetsCrawl = new ArrayList<>();
@@ -166,7 +166,7 @@ public class TweetPage extends Page{
         Set<String> tweetLinksCrawl = new HashSet<>();
         Set<String> userIdCrawl = new HashSet<>();
 
-        int i = 54;
+        int i = 116;
         WebDriver driver = WebDriverUtil.setUpDriver();
         for (String link : subData){
             if(!tweetLinksCrawl.contains(link) ) {

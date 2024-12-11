@@ -1,0 +1,45 @@
+[ {
+  "profileUrl" : "https://x.com/Cointelegraph",
+  "userId" : "Cointelegraph",
+  "userName" : "Cointelegraph",
+  "bio" : "The leader in Bitcoin, Ethereum & blockchain news. TG: http://t.me/cointelegraph Mobile app: https://linktr.ee/cointelegraph_mobile…",
+  "profileImageUrl" : "",
+  "followersCount" : "2.4M",
+  "followingCount" : "1,204",
+  "tweetCount" : 0,
+  "tweets" : null,
+  "following" : [ "TheCryptoLark", "krakenfx", "Tether_to", "ForbesCrypto", "BitcoinMagazine", "deeban_r", "coingecko", "crypto", "AltcoinDailyio", "CertiK" ]
+}, {
+  "profileUrl" : "https://x.com/jessecoghlann",
+  "userId" : "jessecoghlann",
+  "userName" : "Jesse",
+  "bio" : "Senior editor \n@cointelegraph\n // grad \n@ucla\n // #solana //co-host of The Agenda podcast",
+  "profileImageUrl" : "",
+  "followersCount" : "3,275",
+  "followingCount" : "41",
+  "tweetCount" : 0,
+  "tweets" : null,
+  "following" : [ "TheCryptoLark", "Ashcryptoreal", "shiro", "HalbornSecurity", "BitcoinMagazine", "CoinDesk", "coingecko", "crypto", "AltcoinDailyio", "CertiK" ]
+}, {
+  "profileUrl" : "https://x.com/Moittio",
+  "userId" : "Moittio",
+  "userName" : "do it",
+  "bio" : "",
+  "profileImageUrl" : "",
+  "followersCount" : "561",
+  "followingCount" : "41",
+  "tweetCount" : 0,
+  "tweets" : null,
+  "following" : [ "Cointelegraph", "sassal0x", "Ashcryptoreal", "eleon_bit", "Ethprofit", "econoar", "MartiniGuyYT", "brian_armstrong", "SatoshiFlipper", "News_Of_Alpha" ]
+}, {
+  "profileUrl" : "https://x.com/cryptobull4ever",
+  "userId" : "cryptobull4ever",
+  "userName" : "CryptoBull4ever",
+  "bio" : "",
+  "profileImageUrl" : "",
+  "followersCount" : "504",
+  "followingCount" : "105",
+  "tweetCount" : 0,
+  "tweets" : null,
+  "following" : [ "FjordFoundry", "Ashcryptoreal", "KmanuS88", "QuintenFrancois", "GoRWAChain", "Taiboku_", "thetronkeeper", "GalacticaNet", "sqrlswap", "franampolini" ]
+} ]

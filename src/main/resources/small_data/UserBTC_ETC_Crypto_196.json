@@ -1,0 +1,34 @@
+[ {
+  "profileUrl" : "https://x.com/BTC_Archive",
+  "userId" : "BTC_Archive",
+  "userName" : "Bitcoin Archive",
+  "bio" : "#Bitcoin News, Insight, and Commentary  \nFollow me: \n@ArchieX__",
+  "profileImageUrl" : "",
+  "followersCount" : "1.5M",
+  "followingCount" : "700",
+  "tweetCount" : 0,
+  "tweets" : null,
+  "following" : [ "CryptoMichNL", "woonomic", "saylor", "Davincij15", "intocryptoverse", "PeterMcCormack", "maxkeiser", "100trillionUSD", "DocumentingBTC", "AltcoinDailyio" ]
+}, {
+  "profileUrl" : "https://x.com/AdetolaAdenusi",
+  "userId" : "AdetolaAdenusi",
+  "userName" : "adetola adenusi",
+  "bio" : "",
+  "profileImageUrl" : "",
+  "followersCount" : "552",
+  "followingCount" : "2,833",
+  "tweetCount" : 0,
+  "tweets" : null,
+  "following" : [ "you_stem", "danheld", "Dare2Digitize", "menolevjohnson", "rovercrc", "AurelienjOhayon", "saylor", "Nikiisaysrawr", "PiotrSpox", "iam_micheal_jnr" ]
+}, {
+  "profileUrl" : "https://x.com/A_Ostrander1",
+  "userId" : "A_Ostrander1",
+  "userName" : "Allison Ostrander",
+  "bio" : "Day Trader | Risk Management specialist | Sharing Knowledge | Send a Dm to Join My Live Trading Sessions",
+  "profileImageUrl" : "",
+  "followersCount" : "3,619",
+  "followingCount" : "40",
+  "tweetCount" : 0,
+  "tweets" : null,
+  "following" : [ "TheCryptoLark", "danheld", "CryptoMichNL", "WClementeIII", "bitcoinofficesv", "SenLummis", "BitcoinNewsCom", "RealAlexJones", "eliz883", "VivekGRamaswamy" ]
+} ]
