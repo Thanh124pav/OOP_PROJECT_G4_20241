@@ -37,22 +37,20 @@ public class TweetPage extends Page{
     public TweetPage() {}
 
     public TweetPage(String link) {
-        //this.tweetUrl = link;
         tweet = new Tweet(link);
         extractBasicInfo(link);
     }
     private void extractBasicInfo(String link){
         String[] partsOfLink = link.split("/");
         if(partsOfLink.length >=4){
-            //this.author = partsOfLink[3];
             tweet.setAuthor(partsOfLink[3]);
         }
         if(partsOfLink.length >=6){
-            //this.tweetId = partsOfLink[5];
             tweet.setTweetId(partsOfLink[5]);
         }
 
     }
+
     public void extractContent(WebDriver driver){
         String content ;
         try {
@@ -81,30 +79,14 @@ public class TweetPage extends Page{
         }
         tweet.setHashtags(new ArrayList<>(hashtags));
     }
+
     public void extractDetails(WebDriver driver) throws InterruptedException, IOException {
         //driver.get(tweetUrl);
         driver.get(tweet.getTweetUrl());
         Thread.sleep(5000);
 
-        //content = driver.findElement(By.cssSelector(contentCard)).getText();
         extractContent(driver);
-//        Set<WebElement> hashtagCards = new HashSet<>(driver.findElements(By.cssSelector(TweetPage.hashtagCard)));
-//        if(!hashtagCards.isEmpty()){
-//            for (WebElement hashtagCard : hashtagCards) {
-//                String hashtag = hashtagCard.getText();
-//                if(!hashtag.isEmpty()){
-//                    if(hashtag.charAt(0) == '#'){
-//                        hashtags.add(hashtag);
-//                    }
-//                }
-//            }
-//        }
         extractHashtag(driver);
-
-//        repliesCount = driver.findElement(By.cssSelector(replyCard)).getText() ;
-//        retweetsCount =  driver.findElement(By.cssSelector(retweetCard)).getText() ;
-//        likesCount = driver.findElement(By.cssSelector(likesCard)).getText() ;
-//        createdAt = driver.findElement(By.cssSelector(timeCard)).getAttribute("datetime");
         tweet.setRepliesCount(driver.findElement(By.cssSelector(replyCard)).getText());
         tweet.setRetweetsCount(driver.findElement(By.cssSelector(retweetCard)).getText());
         tweet.setLikesCount(driver.findElement(By.cssSelector(likesCard)).getText());
@@ -113,12 +95,10 @@ public class TweetPage extends Page{
     }
 
     public void extractRetweeters(WebDriver driver, int limit) throws InterruptedException, IOException {
-        //driver.get(tweetUrl + "/retweets");
         driver.get(tweet.getTweetUrl() + "/retweets");
         Thread.sleep(5000);
 
         Set<String> elements = getElementsByScroll(driver, limit, Page.userCard);
-        //retweeters.addAll(elements);
         tweet.setRetweeters(new ArrayList<>(elements));
     }
 
@@ -129,7 +109,6 @@ public class TweetPage extends Page{
 
     @Override
     protected Set<String> extractInfoBySCroll(Set<WebElement> elements){
-        //Set<Page> basicInfos = new HashSet<>();
         Set<String> links = super.extractInfoBySCroll(elements);
         Set<String> ids = new HashSet<>();
         for (String link: links){
@@ -139,62 +118,22 @@ public class TweetPage extends Page{
         return ids;
     };
 
-//    public String getTweetId() {
-//        return tweetId;
-//    }
-//
-//    public String getAuthor() {
-//        return author;
-//    }
-//
-//    public String getContent() {
-//        return content;
-//    }
-//
-//    public Set<String> getHashtags() {
-//        return hashtags;
-//    }
-//
-//    public String getRepliesCount() {
-//        return repliesCount;
-//    }
-//
-//    public String getRetweetsCount() {
-//        return retweetsCount;
-//    }
-//
-//    public String getLikesCount() {
-//        return likesCount;
-//    }
-//
-//    public String getCreatedAt() {
-//        return createdAt;
-//    }
-
     public Tweet getTweet() {
         return tweet;
     }
-
-//    public List<String> getRetweeters() {
-//        return retweeters;
-//    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TweetPage tweetPage = (TweetPage) o;
-        //return Objects.equals(tweetId, tweetPage.tweetId);  // So sánh dựa trên thuộc tính id
         return Objects.equals(tweet.getTweetUrl(), tweetPage.tweet.getTweetUrl());
     }
 
     @Override
     public int hashCode() {
-        //return Objects.hash(tweetId);
         return Objects.hash(tweet.getTweetId());
     }
-
-
 
     public static void main(String[] args) throws InterruptedException, IOException {
 
@@ -222,14 +161,9 @@ public class TweetPage extends Page{
                 UserPage userPage = new UserPage(tweetPage.tweet.getAuthor());
                 tweetPage.extractAllInfo(driver, 30);
                 tweetsCrawl.add(tweetPage);
-//                if(!userIdCrawl.contains(tweet.getAuthor())){
-//                    userIdCrawl.add(tweet.getAuthor());
-//                    user.extractAllInfo(driver, 5, 30);
-//                    usersCrawl.add(user);
-//                }
                 if(!userIdCrawl.contains(tweetPage.tweet.getAuthor())){
                     userIdCrawl.add(tweetPage.tweet.getAuthor());
-                    userPage.extractAllInfo(driver, 5, 30);
+                    userPage.extractAllInfo(driver, 0, 30);
                     usersCrawl.add(userPage);
                 }
                 for(String userId: tweetPage.tweet.getRetweeters()){
@@ -245,7 +179,6 @@ public class TweetPage extends Page{
                         }
                         catch (Exception e){
                             e.printStackTrace();
-                            continue;
                         }
 
                     }
@@ -260,6 +193,7 @@ public class TweetPage extends Page{
             String fileUser = "src\\main\\resources\\small_data\\UserBTC_ETC_Crypto_" + i + ".json" ;
             Save saveUserData = new Save(fileUser);
             saveUserData.saveToJSON(usersCrawl);
+
             tweetsCrawl.clear();
             usersCrawl.clear();
             System.out.printf("Save %d elements successfully!\n", i);
