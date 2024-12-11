@@ -18,21 +18,6 @@ public class TweetPage extends Page{
     protected static String timeCard = primaryColumn + "a.css-1jxf684.r-bcqeeo.r-1ttztb7.r-qvutc0.r-poiln3.r-xoduu5.r-1q142lx.r-1w6e6rj.r-9aw3ui.r-3s2u2q.r-1loqt21 time";
 
     private Tweet tweet;
-//    //Basic attributes
-//    private String tweetUrl;
-//    private String tweetId;
-//    private String author;
-//
-//    //Detail attributes
-//    private String content;
-//    private Set<String> hashtags = new HashSet<>();
-//    private String repliesCount;
-//    private String retweetsCount;
-//    private String likesCount;
-//    private String createdAt;
-
-    //Advance attributes
-    //private List<String> retweeters = new ArrayList<>();
 
     public TweetPage() {}
 
@@ -81,7 +66,6 @@ public class TweetPage extends Page{
     }
 
     public void extractDetails(WebDriver driver) throws InterruptedException, IOException {
-        //driver.get(tweetUrl);
         driver.get(tweet.getTweetUrl());
         Thread.sleep(5000);
 
@@ -157,7 +141,6 @@ public class TweetPage extends Page{
                 i+=1;
                 System.out.println("\t" + link);
                 TweetPage tweetPage = new TweetPage(link);
-                //UserPage user = new UserPage(tweet.getAuthor());
                 UserPage userPage = new UserPage(tweetPage.tweet.getAuthor());
                 tweetPage.extractAllInfo(driver, 30);
                 tweetsCrawl.add(tweetPage);

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class User {
     private String userId;
-    private String username;
+    private String userName;
     private String bio;
     private String profileUrl;
     private String profileImageUrl;
@@ -30,12 +30,12 @@ public class User {
         this.userId = userId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String username) {
+        this.userName = userName;
     }
 
     public String getBio() {

@@ -47,11 +47,4 @@ public class TweetSearchPage extends Page{
         return links;
     }
 
-    public static void main(String[] args) throws InterruptedException, IOException {
-        String keyword = "#Bitcoin";
-        WebDriver driver = WebDriverUtil.setUpDriver();
-        TweetSearchPage searchPage = new TweetSearchPage(encode(keyword));
-        searchPage.crawlLinks(driver, Page.tweetCard, "src\\main\\resources\\linkHBitcoin.json" );
-
-    }
 }

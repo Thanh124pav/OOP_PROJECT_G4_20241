@@ -28,7 +28,7 @@ public class UserPage extends Page{
     public void extractDetails(WebDriver driver) throws InterruptedException, IOException {
         driver.get(this.user.getProfileUrl());
         Thread.sleep(3000);
-        this.user.setUsername(driver.findElement(By.cssSelector(userNameCard)).getText());
+        this.user.setUserName(driver.findElement(By.cssSelector(userNameCard)).getText());
         try {
             WebElement bioElement = driver.findElement(By.cssSelector(bioCard));
             user.setBio(bioElement.getText());
