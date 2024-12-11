@@ -13,26 +13,27 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Save {
-    private final String fileName;
+    private final String FILE_NAME;
     private Set<Tweet> tweets;
     private Set<User> users;
+
     public Save(String fileName) {
-        this.fileName = fileName;
+        this.FILE_NAME = fileName;
     }
 
-    public Save(String fileName, Set<Tweet> tweets, Set<User> users) {
-        this.fileName = fileName;
+    public Save(String FILE_NAME, Set<Tweet> tweets, Set<User> users) {
+        this.FILE_NAME = FILE_NAME;
         this.tweets = tweets;
         this.users = users;
     }
     public void saveToJSON() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.writerWithDefaultPrettyPrinter().writeValue(new File(fileName), this);
+        mapper.writerWithDefaultPrettyPrinter().writeValue(new File(FILE_NAME), this);
     }
 
     public void saveToJSON(Object o) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.writerWithDefaultPrettyPrinter().writeValue(new File(fileName), o);
+        mapper.writerWithDefaultPrettyPrinter().writeValue(new File(FILE_NAME), o);
     }
 
     public static <T> Set<T> loadJSON(String fileName, TypeReference<Set<T>> typeReference) throws IOException {
